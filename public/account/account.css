@@ -1,0 +1,212 @@
+/* Все стили для личного кабинета */
+html {
+    scroll-behavior: smooth; /* Плавная прокрутка страницы */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Основной шрифт страницы */
+    margin: 0;
+    padding: 0;
+    color: whitesmoke; /* Цвет текста */
+    text-align: center; /* Выравнивание текста по центру */
+    background-image: url('../media/медиа\ для\ страницы/фон.png'); /* Фоновое изображение */
+    background-size: cover; /* Масштабирование фона */
+    background-repeat: no-repeat; /* Отключение повторения фона */
+    background-attachment: fixed; /* Фиксация фона при прокрутке */
+    background-position-x: center; /* Центрирование фона по горизонтали */
+}
+
+.container {
+    max-width: 800px; /* Максимальная ширина контейнера */
+    margin: 20px auto; /* Центрирование контейнера */
+    padding: 20px; /* Внутренние отступы */
+    background: rgba(0,0,0,0.8); /* Полупрозрачный черный фон */
+    color: white; /* Цвет текста */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0px 0px 300px 1px rgba(255,0,0,0.4); /* Тень вокруг контейнера */
+}
+
+.avatar-section {
+    margin: 20px 0; /* Отступы сверху и снизу */
+    text-align: center; /* Центрирование содержимого */
+}
+
+.avatar-preview {
+    width: 200px; /* Ширина аватара */
+    height: 200px; /* Высота аватара */
+    border-radius: 50%; /* Круглая форма */
+    overflow: hidden; /* Обрезка содержимого */
+    margin: 0 auto 20px; /* Центрирование и отступ снизу */
+    border: 3px solid rgb(190, 40, 40); /* Красная рамка */
+    -webkit-box-shadow:0px 0px 300px 1px rgba(255,0,0,1); /* Тень для WebKit */
+    -moz-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Тень для Mozilla */
+    box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Общая тень */
+}
+
+.avatar-preview img {
+    width: 100%; /* Ширина изображения */
+    height: 100%; /* Высота изображения */
+    object-fit: cover; /* Обрезка изображения по контейнеру */
+}
+
+.no-avatar {
+    background: #333; /* Фон для отсутствующего аватара */
+    width: 100%; /* Ширина блока */
+    height: 100%; /* Высота блока */
+    display: flex; /* Flexbox для центрирования */
+    align-items: center; /* Вертикальное центрирование */
+    justify-content: center; /* Горизонтальное центрирование */
+    font-size: 120%; /* Размер текста */
+}
+
+table {
+    width: 100%; /* Ширина таблицы */
+    border-collapse: collapse; /* Удаление промежутков между ячейками */
+    margin: 20px 0; /* Отступы сверху и снизу */
+    background: rgba(0,0,0,0.5); /* Полупрозрачный черный фон */
+}
+
+th, td {
+    padding: 10px; /* Внутренние отступы */
+    border: 1px solid #444; /* Граница ячеек */
+}
+
+th {
+    background-color: rgba(190, 40, 40, 0.3); /* Фон заголовков таблицы */
+}
+
+.orders-history h2 {
+    color: rgb(43, 228, 203); /* Цвет заголовка истории заказов */
+}
+
+.success {
+    color: #4CAF50; /* Зеленый цвет текста */
+    padding: 15px; /* Внутренние отступы */
+    margin: 20px 0; /* Отступы сверху и снизу */
+    border: 1px solid #4CAF50; /* Зеленая рамка */
+    border-radius: 5px; /* Скругленные углы */
+    background: rgba(76, 175, 80, 0.1); /* Полупрозрачный зеленый фон */
+}
+
+.error {
+    color: #ff4444; /* Красный цвет текста */
+    padding: 10px; /* Внутренние отступы */
+    margin: 10px 0; /* Отступы сверху и снизу */
+    border: 1px solid #ff4444; /* Красная рамка */
+    border-radius: 5px; /* Скругленные углы */
+    background: rgba(255, 68, 68, 0.1); /* Полупрозрачный красный фон */
+}
+
+form {
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    padding: 20px; /* Внутренние отступы */
+    border-radius: 10px; /* Скругленные углы */
+    margin: 20px 0; /* Отступы сверху и снизу */
+}
+
+label {
+    display: block; /* Блочный элемент */
+    margin: 15px 0; /* Отступы сверху и снизу */
+    font-size: 16px; /* Размер шрифта */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="file"] {
+    width: 100%; /* Ширина поля ввода */
+    padding: 10px; /* Внутренние отступы */
+    margin-top: 5px; /* Отступ сверху */
+    background: rgba(255,255,255,0.1); /* Полупрозрачный белый фон */
+    border: 1px solid #444; /* Граница поля */
+    border-radius: 5px; /* Скругленные углы */
+    color: white; /* Цвет текста */
+}
+
+button {
+    background-color: rgb(200, 100, 100); /* Фон кнопки */
+    color: whitesmoke; /* Цвет текста */
+    padding: 10px 25px; /* Внутренние отступы */
+    border: none; /* Удаление границы */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Указатель мыши */
+    transition: background-color 0.3s ease; /* Плавный переход цвета */
+    margin-top: 15px; /* Отступ сверху */
+}
+
+button:hover {
+    background-color: dimgray; /* Цвет кнопки при наведении */
+}
+
+h1 {
+    color: rgb(43, 228, 203); /* Цвет заголовка */
+    border-bottom: 2px solid rgb(190, 40, 40); /* Нижняя граница */
+    padding-bottom: 15px; /* Отступ снизу */
+}
+
+.account-nav1 {
+    left: 20px; /* Расположение слева */
+}
+
+.account-nav2 {
+    right: 20px; /* Расположение справа */
+}
+
+.account-nav1,
+.account-nav2 {
+    position: fixed; /* Фиксированное положение */
+    top: 20px; /* Расположение сверху */
+    z-index: 10; /* Приоритет отображения */
+}
+
+.nav-button {
+    background: #c86464; /* Фон кнопки навигации */
+    color: white; /* Цвет текста */
+    padding: 10px 20px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругленные углы */
+    text-decoration: none; /* Удаление подчеркивания */
+    margin-left: 10px; /* Отступ слева */
+    transition: background 0.3s; /* Плавный переход фона */
+}
+
+.nav-button:hover {
+    background: #d33; /* Цвет кнопки навигации при наведении */
+}
+
+/* Стили для таблицы истории заказов */
+.orders-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: whitesmoke;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.orders-history th, .orders-history td {
+    padding: 12px 15px;
+    border: 1px solid #444;
+}
+
+.orders-history th {
+    background-color: rgba(190, 40, 40, 0.8);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.orders-history tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.orders-history tr:hover {
+    background-color: rgba(190, 40, 40, 0.3);
+    transition: background-color 0.3s ease;
+}
+
+.orders-history td {
+    text-align: center;
+}

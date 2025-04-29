@@ -1,0 +1,379 @@
+/* Плавная прокрутка для всей страницы */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Общие стили для тела страницы */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: whitesmoke; /* Цвет текста */
+    text-align: center; /* Центрирование текста */
+    background-image: url('/media/медиа\ для\ страницы/фон.png'); /* Фоновое изображение */
+    background-size: cover; /* Изображение покрывает весь экран */
+    background-repeat: no-repeat; /* Без повторения фона */
+    background-attachment: fixed; /* Фон фиксируется при прокрутке */
+    background-position-x: center; /* Центрирование фона по горизонтали */
+}
+
+/* Контейнер для видео-оверлея */
+.video-container {
+    position: fixed; /* Фиксированное положение */
+    top: 0;
+    left: 0;
+    width: 100%; /* Ширина на весь экран */
+    height: 100%; /* Высота на весь экран */
+    background: #000; /* Черный фон */
+    z-index: 3; /* Приоритет отображения */
+    opacity: 1; /* Полная видимость */
+    animation: hideVideo 1s ease-out forwards; /* Анимация скрытия видео */
+    animation-delay: 3s; /* Задержка анимации на 3 секунды */
+}
+
+/* Стили для видео внутри контейнера */
+.video-container video {
+    width: 100%; /* Видео на всю ширину */
+    height: 100%; /* Видео на всю высоту */
+    object-fit: cover; /* Видео покрывает контейнер */
+}
+
+/* Анимация скрытия видео */
+@keyframes hideVideo {
+    0% { opacity: 1; visibility: visible; } /* Начальное состояние */
+    100% { opacity: 0; visibility: hidden; } /* Конечное состояние */
+}
+
+/* Кнопка "наверх" */
+#scrollToTop {
+    position: fixed; /* Фиксированное положение */
+    bottom: 20px; /* Отступ снизу */
+    right: 20px; /* Отступ справа */
+    padding: 5px 17px; /* Внутренние отступы */
+    font-size: 30px; /* Размер текста */
+    background-color: red; /* Красный фон */
+    color: white; /* Белый текст */
+    text-decoration: none; /* Убираем подчеркивание */
+    border-radius: 50%; /* Круглая кнопка */
+    z-index: 2; /* Приоритет отображения */
+}
+
+/* Эффект наведения на кнопку "наверх" */
+#scrollToTop:hover {
+    background-color: white; /* Белый фон */
+    color: black; /* Черный текст */
+}
+
+/* Стили для шапки сайта */
+header {
+    display: flex; /* Гибкий контейнер */
+    justify-content: space-between; /* Распределение элементов */
+    align-items: flex-start; /* Выравнивание по началу */
+    padding: 15px 5%; /* Внутренние отступы */
+    background: #000; /* Черный фон */
+    position: relative; /* Относительное позиционирование */
+}
+
+/* Логотип */
+.logo img {
+    width: 10%; /* Ширина логотипа */
+    display: block; /* Блочный элемент */
+    margin: 0 auto; /* Центрирование */
+}
+
+/* Дополнительный отступ для кнопки заказа */
+.order-button2 {
+    margin-top: 15px;
+}
+
+/* Стили для ссылок кнопок заказа */
+.order-button {
+    color: dimgray; /* Темно-серый цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+/* Кнопка авторизации */
+.auth-button {
+    position: absolute; /* Абсолютное позиционирование */
+    margin: 1.5%; /* Внешние отступы */
+    right: 2%; /* Отступ справа */
+    background: #444; /* Темно-серый фон */
+    padding: 8px 20px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругленные углы */
+    white-space: nowrap; /* Запрет переноса текста */
+    color: white; /* Белый текст */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+/* Центрирование блока навигации */
+nav div {
+    text-align: center;
+}
+
+/* Стили для меню навигации */
+nav ul {
+    display: flex; /* Гибкий контейнер */
+    list-style: none; /* Убираем маркеры списка */
+    padding: 0; /* Убираем отступы */
+    justify-content: center; /* Центрирование элементов */
+}
+
+/* Стили для пунктов меню */
+nav ul li {
+    margin: 0 12px; /* Отступы между пунктами */
+}
+
+/* Стили для ссылок в меню */
+nav ul li a {
+    text-decoration: none; /* Убираем подчеркивание */
+    font-weight: bold; /* Жирный текст */
+    color: rgb(43, 228, 203); /* Циановый цвет */
+}
+
+/* Стили для изображений в основном разделе */
+main img {
+    width: 400px; /* Ширина изображения */
+    height: 300px; /* Высота изображения */
+    object-fit: cover; /* Изображение покрывает заданные размеры */
+    border-radius: 10px; /* Скругленные углы */
+    overflow: hidden; /* Скрытие выходящих за границы частей */
+}
+
+/* Описание */
+.opisanie {
+    font-size: 20px; /* Размер текста */
+    text-align: justify; /* Выравнивание текста по ширине */
+    width: fit-content; /* Ширина по содержимому */
+    margin: 30px; /* Внешние отступы */
+    border-radius: 10px; /* Скругленные углы */
+    text-shadow: 0.1em 0.1em #212121; /* Тень текста */
+    border: 3px solid rgb(190, 40, 40); /* Красная рамка */
+    padding: 20px; /* Внутренние отступы */
+    background: rgba(0, 0, 0, 0.3); /* Полупрозрачный черный фон */
+    backdrop-filter: blur(6px); /* Эффект размытия */
+    -webkit-backdrop-filter: blur(6px); /* Размытие для Safari */
+    box-shadow: 0px 0px 75px 20px rgba(255,0,0,0.4); /* Красное свечение */
+}
+
+/* Сетка для раздела автомобилей */
+.car {
+    padding: 20px; /* Внутренние отступы */
+    display: grid; /* Сетка */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Адаптивная сетка */
+    gap: 20px; /* Расстояние между элементами */
+    justify-content: center; /* Центрирование */
+}
+
+/* Заголовок раздела автомобилей */
+.kuzov {
+    font-size: 30px; /* Размер текста */
+    text-align: center; /* Центрирование текста */
+    grid-column: 1 / -1; /* Заголовок на всю ширину сетки */
+}
+
+/* Стили для ссылок на сайты */
+.site-link {
+    border-radius: 5px; /* Скругленные углы */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    text-align: center; /* Центрирование текста */
+    padding: 20px; /* Внутренние отступы */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные эффекты при наведении */
+    position: relative; /* Относительное позиционирование */
+    min-height: 250px; /* Минимальная высота */
+    max-width: 100%; /* Максимальная ширина */
+    margin: auto; /* Центрирование */
+}
+
+/* Эффект наведения на ссылки */
+.site-link:hover {
+    transform: translateY(-5px); /* Поднимаем элемент вверх */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Усиление тени */
+}
+
+/* Заголовки ссылок */
+.site-link h2 {
+    font-size: 30px; /* Размер текста */
+    margin: 10px; /* Внешние отступы */
+    margin-bottom: 30px; /* Отступ снизу */
+}
+
+/* Кнопки ссылок */
+.site-link a {
+    color: rgb(0, 255, 213); /* Циановый цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    font-weight: bold; /* Жирный текст */
+    border: 2px solid rgb(200, 100, 100); /* Красная рамка */
+    padding: 10px 20px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругленные углы */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Плавные эффекты при наведении */
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 1%; /* Отступ снизу */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Центрирование */
+}
+
+/* Эффект наведения на кнопки ссылок */
+.site-link a:hover {
+    background-color: dimgray; /* Темно-серый фон */
+    color: #fff; /* Белый текст */
+}
+
+/* Контейнер формы */
+.forma {
+    background-color: rgba(0, 0, 0, 0.8); /* Полупрозрачный черный фон */
+    color: whitesmoke; /* Белый текст */
+    padding: 50px; /* Внутренние отступы */
+    border-radius: 10px; /* Скругленные углы */
+    width: 30%; /* Ширина 50% */
+    margin: 30px auto; /* Центрирование */
+    text-align: left; /* Выравнивание текста по левому краю */
+    -webkit-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение для Safari */
+    -moz-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение для Firefox */
+    box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение */
+}
+
+/* Заголовки формы */
+.forma h2 {
+    text-align: center; /* Центрирование текста */
+    font-size: 28px; /* Размер текста */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+/* Метки формы */
+.forma label {
+    display: block; /* Блочный элемент */
+    font-size: 18px; /* Размер текста */
+    margin-top: 10px; /* Отступ сверху */
+}
+
+/* Поля ввода, выпадающие списки и текстовые области */
+.forma input,
+.forma select,
+.forma textarea {
+    width: 100%; /* Ширина 100% */
+    padding: 10px; /* Внутренние отступы */
+    margin-top: 5px; /* Отступ сверху */
+    border: 1px solid #ccc; /* Серая рамка */
+    border-radius: 5px; /* Скругленные углы */
+    font-size: 16px; /* Размер текста */
+    box-sizing: border-box;
+}
+
+/* Дополнительные стили для текстовых областей */
+.forma textarea {
+    height: 100px; /* Высота */
+    resize: vertical; /* Разрешение изменения высоты */
+}
+
+/* Кнопки формы */
+.forma button {
+    display: block; /* Блочный элемент */
+    width: 100%; /* Ширина 100% */
+    padding: 10px; /* Внутренние отступы */
+    background-color: rgb(200, 100, 100); /* Красный фон */
+    color: whitesmoke; /* Белый текст */
+    border: none; /* Без рамки */
+    border-radius: 5px; /* Скругленные углы */
+    font-size: 18px; /* Размер текста */
+    margin-top: 15px; /* Отступ сверху */
+    cursor: pointer; /* Указатель мыши */
+    transition: background-color 0.3s ease; /* Плавный эффект при наведении */
+}
+
+/* Эффект наведения на кнопки формы */
+.forma button:hover {
+    background-color: dimgray; /* Темно-серый фон */
+}
+
+/* Подвал */
+footer {
+    background-color: #000; /* Черный фон */
+    color: #fff; /* Белый текст */
+    text-align: center; /* Центрирование текста */
+    padding: 10px 0; /* Внутренние отступы */
+    margin-top: 20px; /* Отступ сверху */
+    width: 100%; /* Ширина 100% */
+    bottom: 0; /* Положение внизу */
+}
+
+/* Ссылки в подвале */
+footer a {
+    color: dimgray; /* Темно-серый цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+/* Установка контекста наложения для ключевых элементов */
+body, header, nav, .opisanie, .car, .forma, footer {
+    position: relative; /* Относительное позиционирование */
+    z-index: 1; /* Приоритет отображения */
+}
+
+/* Стили для сообщений об ошибках */
+.error {
+    color: #ff4444; /* Красный текст */
+    font-size: 14px; /* Размер текста */
+    margin-top: 5px; /* Отступ сверху */
+    padding: 5px; /* Внутренние отступы */
+    border: 1px solid #ff4444; /* Красная рамка */
+    border-radius: 3px; /* Скругленные углы */
+    background: rgba(255, 68, 68, 0.1); /* Светло-красный фон */
+}
+
+/* Попап */
+.popup {
+    position: fixed; /* Фиксированное положение */
+    top: 50%; /* Центрирование по вертикали */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translate(-50%, -50%); /* Центрирование */
+    padding: 20px; /* Внутренние отступы */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Тень */
+    z-index: 10; /* Приоритет отображения */
+    max-width: 400px; /* Максимальная ширина */
+    text-align: center; /* Центрирование текста */
+    border-radius: 8px; /* Скругленные углы */
+    background: rgb(125, 190, 15); /* Зеленый фон */
+    color: white; /* Белый текст */
+    opacity: 0; /* Скрыт по умолчанию */
+    visibility: hidden; /* Скрыт по умолчанию */
+    transition: opacity 0.5s ease, visibility 0.5s ease; /* Плавный переход */
+}
+
+.popup.show {
+    opacity: 1; /* Видимый */
+    visibility: visible; /* Отображается */
+}
+
+.popup .close-popup {
+    background: #444; /* Темно-серый фон */
+    color: white; /* Белый текст */
+    border: none; /* Без рамки */
+    padding: 10px 20px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругленные углы */
+    cursor: pointer; /* Указатель мыши */
+    transition: background 0.3s ease; /* Плавный эффект при наведении */
+}
+
+.popup .close-popup:hover {
+    background: #666; /* Темно-серый фон при наведении */
+}
+
+/* Сообщения об ошибках */
+.error-message {
+    color: #dc3545; /* Красный текст */
+    background: #f8d7da; /* Светло-красный фон */
+    padding: 10px; /* Внутренние отступы */
+    margin: 15px 0; /* Внешние отступы */
+    border-radius: 4px; /* Скругленные углы */
+    border: 1px solid #f5c6cb; /* Красная рамка */
+}
+
+/* Параграфы внутри сообщений об ошибках */
+.error-message p {
+    margin: 5px 0; /* Внешние отступы */
+}
+
+/* Анимация появления слайдом */
+@keyframes slideIn {
+    from { transform: translateX(100%); } /* Начальное положение */
+    to { transform: translateX(0); } /* Конечное положение */
+}

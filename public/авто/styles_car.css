@@ -1,0 +1,86 @@
+body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    position: relative;
+    min-height: 100vh;
+    
+    background-image: url('../media/медиа\ для\ страницы/фон\ машины.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position-x: center;
+}
+
+header {
+    background-color: #000;
+    color: #fff;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.opisanie {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 100%;
+    margin: 0 auto ;
+    padding-bottom: 60px;
+}
+
+.cartochka {
+    color: rgb(0, 255, 220);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #0000;
+}
+.cartochka:hover{
+    background-color: black;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+
+.photo {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+footer {
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    width: 100%;
+    bottom: 0;
+}
+
+p {
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+a {
+    color: dimgray;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.domoi {
+    background-color: #0000;
+    color: white;
+    text-decoration: none;
+}

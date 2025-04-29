@@ -1,0 +1,35 @@
+[29-Apr-2025 23:40:46 Etc/GMT-8] Видео показывается впервые.
+[29-Apr-2025 23:41:00 Etc/GMT-8] Видео показывается впервые.
+[29-Apr-2025 23:41:33 Etc/GMT-8] PHP Fatal error:  Uncaught Error: Call to undefined function return_bytes() in X:\softiki\OSP\OSPanel\home\audi\public\account\account.php:49
+Stack trace:
+#0 {main}
+  thrown in X:\softiki\OSP\OSPanel\home\audi\public\account\account.php on line 49
+[29-Apr-2025 23:42:00 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:42:39 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:42:52 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:44:28 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:44:33 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:02 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:02 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:03 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:10 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:22 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:33 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:33 Etc/GMT-8] Видео уже было показано.
+[29-Apr-2025 23:47:38 Etc/GMT-8] Видео уже было показано.
+[30-Apr-2025 01:44:24 Etc/GMT-8] Видео показывается впервые.
+[30-Apr-2025 01:44:30 Etc/GMT-8] Видео показывается впервые.
+[30-Apr-2025 01:44:39 Etc/GMT-8] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'audi.audi' doesn't exist in X:\softiki\OSP\OSPanel\home\audi\public\account\account.php:25
+Stack trace:
+#0 X:\softiki\OSP\OSPanel\home\audi\public\account\account.php(25): mysqli->prepare('SELECT * FROM a...')
+#1 {main}
+  thrown in X:\softiki\OSP\OSPanel\home\audi\public\account\account.php on line 25
+[30-Apr-2025 01:49:48 Etc/GMT-8] Видео уже было показано.
+[30-Apr-2025 01:50:15 Etc/GMT-8] Видео уже было показано.
+[30-Apr-2025 01:50:18 Etc/GMT-8] Видео показывается впервые.
+[30-Apr-2025 01:50:55 Etc/GMT-8] Видео показывается впервые.
+[30-Apr-2025 01:51:06 Etc/GMT-8] Видео уже было показано.
+[30-Apr-2025 01:51:19 Etc/GMT-8] Видео уже было показано.
+[30-Apr-2025 01:51:19 Etc/GMT-8] Видео уже было показано.
+[30-Apr-2025 01:51:20 Etc/GMT-8] Видео уже было показано.
+[30-Apr-2025 01:51:45 Etc/GMT-8] Видео уже было показано.

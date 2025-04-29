@@ -1,0 +1,172 @@
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: whitesmoke;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../media/медиа\ для\ страницы/фон.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position-x: center;
+}
+
+.forms-container {
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: -2px;
+    position: relative;
+    z-index: 2;
+}
+
+.form-tabs label {
+    padding: 15px 40px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    margin: 0 2px;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s ease;
+    transform: scale(0.95);
+}
+
+.form-tabs label:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1);
+}
+
+input[name="slider"] {
+    display: none;
+}
+
+#login:checked ~ .form-tabs .login-tab,
+#register:checked ~ .form-tabs .register-tab {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 3px solid #2beccb;
+    transform: scale(1);
+}
+
+.forms-wrapper {
+    position: relative;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 300px 1px rgba(255,0,0,1);
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 400px;
+    text-align: center;
+}
+
+#register:checked ~ .forms-wrapper {
+    width: 650px;
+}
+
+.form-box {
+    padding: 40px 0;
+    width: 100%;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#login:checked ~ .forms-wrapper .login-form,
+#register:checked ~ .forms-wrapper .register-form {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+}
+
+#login:checked ~ .forms-wrapper .register-form,
+#register:checked ~ .forms-wrapper .login-form {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    padding: 0 40px;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+.form-group label {
+    display: block;
+    margin: 15px 0 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.form-group input {
+    width: calc(100% - 80px);
+    margin: 0 40px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border-color: #2beccb;
+    background: rgba(255, 255, 255, 0.15);
+    outline: none;
+}
+
+button[type="submit"] {
+    width: calc(100% - 80px);
+    margin: 25px 40px 0;
+    padding: 14px;
+    background: linear-gradient(135deg, rgb(0, 255, 220) 0%, red 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+button[type="submit"]:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.error {
+    width: calc(100% - 80px);
+    margin: 5px 40px 0;
+    color: #ff4444;
+    font-size: 14px;
+    padding: 8px;
+    border-radius: 4px;
+    background: rgba(255, 68, 68, 0.1);
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    animation: shake 0.4s ease;
+    box-sizing: border-box;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(6px); }
+    75% { transform: translateX(-6px); }
+}
