@@ -283,6 +283,5 @@ if (isset($_GET['logout'])) {
                 <p>У вас пока нет заказов.</p>
             <?php endif; ?>
         </div>
-    </div>
 </body>
 </html>
