@@ -1,0 +1,92 @@
+/* admin.css */
+.admin-container {
+    max-width: 85%;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(0,0,0,0.85);
+    border-radius: 12px;
+    box-shadow: 0 0 45px rgba(255,0,0,0.3);
+    box-sizing: border-box; /* Учет отступов в ширине и высоте */
+}
+
+.nav-button,
+button {
+    background: #2beccb;
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 4px;
+    text-decoration: none; /* Удаление подчеркивания */
+    margin-left: 10px; /* Отступ слева */
+    transition: background 0.3s ease; /* Плавный переход фона */
+    cursor: pointer;
+    border: 1px solid #444;
+    font-weight: bold;
+}
+
+.nav-button:hover,
+button:hover {
+    background: #25c7a9;
+}
+
+.admin-table {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 16px;
+    background: rgba(0,0,0,0.7);
+    color: whitesmoke;
+    border-radius: 10px;
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+.admin-table th {
+    background: rgba(190, 40, 40, 0.6);
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    overflow-wrap: break-word; /* Современный аналог word-wrap */
+    white-space: normal !important; /* Разрешить перенос строк */
+    border: 1px solid #444;
+    width: auto;
+    font-weight: bold;
+
+}
+
+.admin-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #333;
+    vertical-align: top;
+    overflow-wrap: break-word; /* Современный аналог word-wrap */
+    white-space: normal !important; /* Разрешить перенос строк */
+}
+
+td:nth-child(7), 
+th:nth-child(7) { /* 7 - номер колонки с комментарием */
+    min-width: 250px; 
+    max-width: 400px;
+}
+
+select {
+    padding: 8px 12px;
+    background: #2c2c2c;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+select:hover {
+    border-color: #2beccb;
+}
+
+.admin-notice {
+    color: #2beccb;
+    text-align: center;
+    padding: 20px;
+    border: 2px solid currentColor;
+    margin: 25px 0;
+}

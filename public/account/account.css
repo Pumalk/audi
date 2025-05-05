@@ -17,13 +17,14 @@ body {
 }
 
 .container {
-    max-width: 800px; /* Максимальная ширина контейнера */
+    max-width: 600px; /* Максимальная ширина контейнера */
     margin: 20px auto; /* Центрирование контейнера */
     padding: 20px; /* Внутренние отступы */
     background: rgba(0,0,0,0.8); /* Полупрозрачный черный фон */
     color: white; /* Цвет текста */
     border-radius: 10px; /* Скругленные углы */
     box-shadow: 0px 0px 300px 1px rgba(255,0,0,0.4); /* Тень вокруг контейнера */
+    box-sizing: border-box; /* Учет отступов в ширине и высоте */
 }
 
 .avatar-section {
@@ -60,7 +61,7 @@ body {
 }
 
 table {
-    width: 100%; /* Ширина таблицы */
+    width: 70%; /* Ширина таблицы */
     border-collapse: collapse; /* Удаление промежутков между ячейками */
     margin: 20px 0; /* Отступы сверху и снизу */
     background: rgba(0,0,0,0.5); /* Полупрозрачный черный фон */
@@ -69,15 +70,15 @@ table {
 th, td {
     padding: 10px; /* Внутренние отступы */
     border: 1px solid #444; /* Граница ячеек */
+    max-width: 100px; /* Максимальная ширина ячеек */
+    overflow-y: auto; /* Вертикальная прокрутка при переполнении */
 }
 
 th {
     background-color: rgba(190, 40, 40, 0.3); /* Фон заголовков таблицы */
 }
 
-.orders-history h2 {
-    color: rgb(43, 228, 203); /* Цвет заголовка истории заказов */
-}
+
 
 .success {
     color: #4CAF50; /* Зеленый цвет текста */
@@ -121,6 +122,7 @@ input[type="file"] {
     border: 1px solid #444; /* Граница поля */
     border-radius: 5px; /* Скругленные углы */
     color: white; /* Цвет текста */
+    text-align: center;
 }
 
 button {
@@ -138,7 +140,7 @@ button:hover {
     background-color: dimgray; /* Цвет кнопки при наведении */
 }
 
-h1 {
+h1, h2 {
     color: rgb(43, 228, 203); /* Цвет заголовка */
     border-bottom: 2px solid rgb(190, 40, 40); /* Нижняя граница */
     padding-bottom: 15px; /* Отступ снизу */
@@ -150,6 +152,13 @@ h1 {
 
 .account-nav2 {
     right: 20px; /* Расположение справа */
+}
+
+.account-nav3 {
+    position: fixed;
+    margin-top: 50px;
+    left: 20px; /* Отступ от правого края */
+    z-index: 10;
 }
 
 .account-nav1,
@@ -173,17 +182,43 @@ h1 {
     background: #d33; /* Цвет кнопки навигации при наведении */
 }
 
+.nav-button.admin {
+    background: #2beccb;
+    color: #000;
+    padding: 10px 20px; /* Внутренние отступы */
+    border-radius: 5px; /* Скругленные углы */
+    text-decoration: none; /* Удаление подчеркивания */
+    margin-left: 10px; /* Отступ слева */
+    transition: background 0.3s; /* Плавный переход фона */
+}
+
+.nav-button.admin:hover {
+    background: #25c7a9;
+}
+
 /* Стили для таблицы истории заказов */
+.orders-history{
+    margin: 20px auto; /* Центрирование таблицы */
+    max-width: 85%; /* Максимальная ширина таблицы */
+    padding: 20px; /* Внутренние отступы */
+    background: rgba(0,0,0,0.8); /* Полупрозрачный черный фон */
+    color: white; /* Цвет текста */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0px 0px 300px 1px rgba(255,0,0,0.4); /* Тень вокруг контейнера */
+    box-sizing: border-box; /* Учет отступов в ширине и высоте */
+}
+
 .orders-history table {
     width: 100%;
+    min-width: 1000px;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 25px 0;
     font-size: 16px;
-    text-align: left;
     background-color: rgba(0, 0, 0, 0.7);
     color: whitesmoke;
     border-radius: 10px;
     overflow: hidden;
+    table-layout: fixed;
 }
 
 .orders-history th, .orders-history td {
@@ -209,4 +244,10 @@ h1 {
 
 .orders-history td {
     text-align: center;
+    overflow-wrap: break-word; /* Современный аналог word-wrap */
+    white-space: normal !important; /* Разрешить перенос строк */
+}
+
+.orders-history h2 {
+    color: rgb(43, 228, 203); /* Цвет заголовка истории заказов */
 }

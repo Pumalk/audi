@@ -16,6 +16,9 @@ if (empty($_SESSION['user'])) {
     exit();
 }
 
+// Проверка прав администратора
+$is_admin = !empty($_SESSION['user']['is_admin']);
+
 // Получаем данные пользователя из сессии
 $user = $_SESSION['user'];
 
@@ -217,6 +220,13 @@ if (isset($_GET['logout'])) {
     <div class="account-nav2">
         <a href="?logout=1" class="nav-button">Выйти из аккаунта</a>
     </div>
+
+    <?php if ($is_admin): ?>
+    <div class="account-nav3">
+        <a href="../admin/admin.php" class="nav-button admin">📦 Управление заказами</a>
+    </div>
+    <?php endif; ?>
+
     <div class="container">
         <h1>Личный кабинет</h1>
 
@@ -258,27 +268,31 @@ if (isset($_GET['logout'])) {
             <label>Дата рождения: <input type="date" name="birth_date" value="<?= htmlspecialchars($user['birth_date']) ?>" required></label>
             <button type="submit" name="update_profile">Обновить профиль</button>
         </form>
-
-        <!-- История заказов -->
-        <div class="orders-history">
+    </div>
+    <!-- История заказов -->
+    <div class="orders-history"> 
             <h2>История заказов</h2>
             <?php if (!empty($orders)): ?>
                 <table>
                     <tr>
                         <th>Модель</th>
                         <th>Телефон</th>
+                        <th>Оплата</th>
+                        <th>Статус</th>
+                        <th>Дата заказа</th>
                         <th>Комментарий</th>
-                        <th>Дата создания заказа</th>
                     </tr>
-                    <?php foreach ($orders as $order): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($order['model']) ?></td>
-                            <td><?= htmlspecialchars($order['phone']) ?></td>
-                            <td><?= nl2br(htmlspecialchars($order['message'])) ?></td>
-                            <td><?= date('d.m.Y H:i', strtotime($order['order_date'])) ?></td>                        
-                        </tr>
-                    <?php endforeach; ?>
-                </table>
+            <?php foreach ($orders as $order): ?>
+        <tr>
+            <td><?= htmlspecialchars($order['model']) ?></td>
+            <td><?= htmlspecialchars($order['phone']) ?></td>
+            <td><?= htmlspecialchars($order['payment_status']) ?></td>
+            <td><?= htmlspecialchars($order['order_status']) ?></td>
+            <td><?= date('d.m.Y H:i', strtotime($order['order_date'])) ?></td>
+            <td><?= nl2br(htmlspecialchars($order['message'])) ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
             <?php else: ?>
                 <p>У вас пока нет заказов.</p>
             <?php endif; ?>

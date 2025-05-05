@@ -33,3 +33,67 @@ Stack trace:
 [30-Apr-2025 01:51:19 Etc/GMT-8] Видео уже было показано.
 [30-Apr-2025 01:51:20 Etc/GMT-8] Видео уже было показано.
 [30-Apr-2025 01:51:45 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 06:15:36 Etc/GMT-8] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for MySQL-8.0 failed: ���� ���� ����������.  in X:\softiki\OSP\OSPanel\home\audi\public\config.php on line 18
+[05-May-2025 06:15:36 Etc/GMT-8] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for MySQL-8.0 failed: ���� ���� ����������.  in X:\softiki\OSP\OSPanel\home\audi\public\config.php:18
+Stack trace:
+#0 X:\softiki\OSP\OSPanel\home\audi\public\config.php(18): mysqli->__construct('MySQL-8.0', 'root', Object(SensitiveParameterValue), 'audi', 3306)
+#1 X:\softiki\OSP\OSPanel\home\audi\public\index.php(8): require_once('X:\\softiki\\OSP\\...')
+#2 {main}
+  thrown in X:\softiki\OSP\OSPanel\home\audi\public\config.php on line 18
+[05-May-2025 06:30:26 Etc/GMT-8] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for MySQL-8.0 failed: ���� ���� ����������.  in X:\softiki\OSP\OSPanel\home\audi\public\config.php on line 18
+[05-May-2025 06:30:26 Etc/GMT-8] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for MySQL-8.0 failed: ���� ���� ����������.  in X:\softiki\OSP\OSPanel\home\audi\public\config.php:18
+Stack trace:
+#0 X:\softiki\OSP\OSPanel\home\audi\public\config.php(18): mysqli->__construct('MySQL-8.0', 'root', Object(SensitiveParameterValue), 'audi', 3306)
+#1 X:\softiki\OSP\OSPanel\home\audi\public\index.php(8): require_once('X:\\softiki\\OSP\\...')
+#2 {main}
+  thrown in X:\softiki\OSP\OSPanel\home\audi\public\config.php on line 18
+[05-May-2025 06:41:23 Etc/GMT-8] PHP Warning:  mysqli::__construct(): php_network_getaddresses: getaddrinfo for MySQL-8.0 failed: ���� ���� ����������.  in X:\softiki\OSP\OSPanel\home\audi\public\config.php on line 18
+[05-May-2025 06:41:23 Etc/GMT-8] PHP Fatal error:  Uncaught mysqli_sql_exception: php_network_getaddresses: getaddrinfo for MySQL-8.0 failed: ���� ���� ����������.  in X:\softiki\OSP\OSPanel\home\audi\public\config.php:18
+Stack trace:
+#0 X:\softiki\OSP\OSPanel\home\audi\public\config.php(18): mysqli->__construct('MySQL-8.0', 'root', Object(SensitiveParameterValue), 'audi', 3306)
+#1 X:\softiki\OSP\OSPanel\home\audi\public\index.php(8): require_once('X:\\softiki\\OSP\\...')
+#2 {main}
+  thrown in X:\softiki\OSP\OSPanel\home\audi\public\config.php on line 18
+[05-May-2025 06:46:07 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 19:30:39 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 19:30:49 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 19:31:23 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:31:42 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:31:42 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:31:44 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:32:09 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 19:32:19 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 19:32:38 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:32:38 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:32:39 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:32:52 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:32:52 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:32:53 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 19:33:01 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 20:00:01 Etc/GMT-8] PHP Fatal error:  Uncaught mysqli_sql_exception: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение in X:\softiki\OSP\OSPanel\home\audi\public\config.php:18
+Stack trace:
+#0 X:\softiki\OSP\OSPanel\home\audi\public\config.php(18): mysqli->__construct('127.127.126.26', 'root', Object(SensitiveParameterValue), 'audi', 3306)
+#1 X:\softiki\OSP\OSPanel\home\audi\public\auth\login.php(2): require_once('X:\\softiki\\OSP\\...')
+#2 {main}
+  thrown in X:\softiki\OSP\OSPanel\home\audi\public\config.php on line 18
+[05-May-2025 20:00:06 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 20:00:13 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:00:22 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:01:18 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:06:26 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:06:28 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:11:49 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 20:11:55 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 20:13:27 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:36:13 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 20:36:19 Etc/GMT-8] Видео показывается впервые.
+[05-May-2025 20:42:03 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:42:16 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:42:16 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 20:42:17 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 21:05:21 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 21:59:34 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 22:28:17 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 22:31:48 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 22:32:38 Etc/GMT-8] Видео уже было показано.
+[05-May-2025 22:33:09 Etc/GMT-8] Видео показывается впервые.
