@@ -28,11 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['close_popup'])) {
 
 // Логика для показа видео только при первом посещении
 if (!isset($_SESSION['video_shown'])) {
-    error_log("Видео показывается впервые.");
     $_SESSION['video_shown'] = true;
     $showVideo = true;
 } else {
-    error_log("Видео уже было показано.");
     $showVideo = false;
 }
 
