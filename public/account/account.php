@@ -260,6 +260,8 @@ if (isset($_GET['logout'])) {
         <?php endif; ?>
 
         <!-- Форма редактирования профиля -->
+        <details class="profile-details">
+        <summary>Показать/Скрыть данные</summary>
         <form method="post">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
             <label>Имя: <input type="text" name="first_name" value="<?= htmlspecialchars($user['first_name']) ?>"></label>
@@ -268,6 +270,7 @@ if (isset($_GET['logout'])) {
             <label>Дата рождения: <input type="date" name="birth_date" value="<?= htmlspecialchars($user['birth_date']) ?>" required></label>
             <button type="submit" name="update_profile">Обновить профиль</button>
         </form>
+        </details>
     </div>
     <!-- История заказов -->
     <div class="orders-history"> 

@@ -196,6 +196,10 @@ h1, h2 {
     background: #25c7a9;
 }
 
+summary {
+    cursor: pointer;
+}
+
 /* Стили для таблицы истории заказов */
 .orders-history{
     margin: 20px auto; /* Центрирование таблицы */
