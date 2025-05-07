@@ -200,6 +200,11 @@ summary {
     cursor: pointer;
 }
 
+summary:hover{
+color: dimgray;
+transition: 0.3s;
+}
+
 /* Стили для таблицы истории заказов */
 .orders-history{
     margin: 20px auto; /* Центрирование таблицы */
