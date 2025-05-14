@@ -5,12 +5,11 @@ body {
     color: #333;
     position: relative;
     min-height: 100vh;
-    
     background-image: url('../media/медиа\ для\ страницы/фон\ машины.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position-x: center;
+    background-position: center;
 }
 
 header {
@@ -26,7 +25,7 @@ header {
     gap: 20px;
     padding: 20px;
     max-width: 100%;
-    margin: 0 auto ;
+    margin: 0;
     padding-bottom: 60px;
 }
 
@@ -57,9 +56,8 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    margin-top: 20px;
     width: 100%;
-    bottom: 0;
+    margin: auto 0 0 ;
 }
 
 p {
@@ -83,4 +81,48 @@ a:hover {
     background-color: #0000;
     color: white;
     text-decoration: none;
+}
+
+/* Адаптивные стили */
+@media (max-width: 1200px) {
+    .opisanie {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .cartochka {
+        padding: 15px;
+    }
+
+    .photo {
+        max-width: 90%;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .opisanie {
+        padding: 10px;
+        grid-template-columns: 1fr;
+    }
+
+    .cartochka {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 14px;
+    }
 }

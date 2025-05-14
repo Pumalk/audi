@@ -170,3 +170,55 @@ button[type="submit"]:hover {
     25% { transform: translateX(6px); }
     75% { transform: translateX(-6px); }
 }
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .forms-wrapper {
+        width: 90% !important;
+        max-width: 400px;
+    }
+
+    .forms-container{
+        margin-left: 5%;
+    }
+
+    #register:checked ~ .forms-wrapper {
+        width: 90% !important;
+        max-width: 650px;
+    }
+
+    .form-group {
+        padding: 0 20px;
+    }
+
+    button[type="submit"] {
+        margin: 20px 20px 0;
+        width: calc(100% - 40px);
+    }
+
+    .form-tabs{
+        transform: scale(0.95);
+    }
+}
+
+@media (max-width: 480px) {
+    .form-tabs label {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .error {
+        font-size: 12px;
+        padding: 6px;
+    }
+}

@@ -1,6 +1,8 @@
 /* Плавная прокрутка для всей страницы */
 html {
     scroll-behavior: smooth;
+    font-size: 100%;
+    margin: 0;
 }
 
 /* Общие стили для тела страницы */
@@ -14,28 +16,34 @@ body {
     background-size: cover; /* Изображение покрывает весь экран */
     background-repeat: no-repeat; /* Без повторения фона */
     background-attachment: fixed; /* Фон фиксируется при прокрутке */
-    background-position-x: center; /* Центрирование фона по горизонтали */
+    background-position: center; /* Центрирование фона по горизонтали */
 }
 
 /* Контейнер для видео-оверлея */
 .video-container {
-    position: fixed; /* Фиксированное положение */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Ширина на весь экран */
-    height: 100%; /* Высота на весь экран */
-    background: #000; /* Черный фон */
-    z-index: 3; /* Приоритет отображения */
-    opacity: 1; /* Полная видимость */
-    animation: hideVideo 1s ease-out forwards; /* Анимация скрытия видео */
-    animation-delay: 3s; /* Задержка анимации на 3 секунды */
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 3;
+    opacity: 1;
+    animation: hideVideo 1s ease-out forwards;
+    animation-delay: 3s;
+
+    /* Центрирование содержимого */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Стили для видео внутри контейнера */
 .video-container video {
-    width: 100%; /* Видео на всю ширину */
-    height: 100%; /* Видео на всю высоту */
-    object-fit: cover; /* Видео покрывает контейнер */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
 }
 
 /* Анимация скрытия видео */
@@ -72,6 +80,7 @@ header {
     padding: 15px 5%; /* Внутренние отступы */
     background: #000; /* Черный фон */
     position: relative; /* Относительное позиционирование */
+    margin: 0;
 }
 
 /* Логотип */
@@ -223,8 +232,6 @@ main img {
     color: whitesmoke; /* Белый текст */
     padding: 50px; /* Внутренние отступы */
     border-radius: 10px; /* Скругленные углы */
-    width: 30%; /* Ширина 50% */
-    margin: 30px auto; /* Центрирование */
     text-align: left; /* Выравнивание текста по левому краю */
     -webkit-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение для Safari */
     -moz-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение для Firefox */
@@ -256,6 +263,7 @@ main img {
     border-radius: 5px; /* Скругленные углы */
     font-size: 16px; /* Размер текста */
     box-sizing: border-box;
+    overflow-y: scroll;
 }
 
 /* Дополнительные стили для текстовых областей */
@@ -375,4 +383,123 @@ body, header, nav, .opisanie, .car, .forma, footer {
 @keyframes slideIn {
     from { transform: translateX(100%); } /* Начальное положение */
     to { transform: translateX(0); } /* Конечное положение */
+}
+
+/* Адаптивные стили */
+@media (max-width: 1200px) {
+    .car {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        margin: auto 3%;
+    }
+    .auth-button{
+        font-size: small;
+        box-sizing: content-box;
+        width: 10%;
+        overflow-wrap: break-word;
+        padding: 1.5%;
+    }
+    .site-link{
+        max-width: 100%;
+    }
+    .site-link img{
+        max-width: 90%;
+        object-fit: contain;
+        justify-content: center;
+    }
+
+    .forma {
+        margin: 30px 0; /* Центрирование */
+        max-width: 80%;
+        padding: 30px;
+        margin: auto;
+    }
+    footer{
+        margin: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .logo img {
+        width: 15%;
+        min-width: 80px;
+    }
+
+    .auth-button{
+        font-size: small;
+        box-sizing: content-box;
+        width: 15%;
+        overflow-wrap: break-word;
+        padding: 2%;
+    }
+
+    nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    main img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+    }
+
+    .car{
+        margin: auto 3%;
+    }
+
+    .forma {
+        width: 90% !important;
+        padding: 20px;
+    }
+
+    #scrollToTop {
+        font-size: 24px;
+        bottom: 15px;
+        right: 1%;
+    }
+
+    .opisanie {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    
+    .auth-button{
+        font-size: small;
+        box-sizing: content-box;
+        width: 25%;
+        overflow-wrap: break-word;
+        padding: 2%;
+    }
+
+    .opisanie {
+        font-size: 16px;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .site-link h2 {
+        font-size: 24px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 14px;
+    }
+
+    #scrollToTop {
+        font-size: 24px;
+        bottom: 15px;
+        right: 3%;
+    }
 }

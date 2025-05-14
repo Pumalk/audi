@@ -39,7 +39,6 @@ body {
     overflow: hidden; /* Обрезка содержимого */
     margin: 0 auto 20px; /* Центрирование и отступ снизу */
     border: 3px solid rgb(190, 40, 40); /* Красная рамка */
-    -webkit-box-shadow:0px 0px 300px 1px rgba(255,0,0,1); /* Тень для WebKit */
     -moz-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Тень для Mozilla */
     box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Общая тень */
 }
@@ -156,7 +155,7 @@ h1, h2 {
 
 .account-nav3 {
     position: fixed;
-    margin-top: 50px;
+    top: 70px;
     left: 20px; /* Отступ от правого края */
     z-index: 10;
 }
@@ -219,7 +218,6 @@ transition: 0.3s;
 
 .orders-history table {
     width: 100%;
-    min-width: 1000px;
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 16px;
@@ -259,4 +257,101 @@ transition: 0.3s;
 
 .orders-history h2 {
     color: rgb(43, 228, 203); /* Цвет заголовка истории заказов */
+}
+
+/* Адаптивные стили */
+@media (max-width: 1200px) {
+    .container {
+        height: 30%;
+        margin-top: 20%;
+        max-width: 60%;
+    }
+
+    .account-nav1,
+    .account-nav2,
+    .account-nav3{
+        font-size: medium;
+    }
+
+    .avatar-preview {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .avatar-section form input,
+    .avatar-section form button{
+        font-size: large;
+    }
+
+    .orders-history {
+        max-width: 90%;
+    }
+
+    .orders-history table{
+        max-width: 100%;
+    }
+
+    th, td{
+        font-size: larger;
+    }
+
+    details{
+        font-size: large;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        margin-top: 10%;
+    }
+
+    .avatar-preview {
+        width: 200px;
+        height: 200px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: small;
+    }
+
+    .nav-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        margin-top: 5%;
+    }
+
+    .avatar-preview {
+        width: 200px;
+        height: 200px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="file"] {
+        font-size: 2rem;
+    }
+
+    button {
+        padding: 8px 20px;
+        font-size: 2rem;
+    }
+
+    .orders-history table {
+        font-size: 2rem;
+        max-width: 100%;
+    }
 }

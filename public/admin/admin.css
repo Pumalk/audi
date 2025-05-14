@@ -30,7 +30,6 @@ button:hover {
 
 .admin-table {
     width: 100%;
-    min-width: 1000px;
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 16px;
@@ -89,4 +88,48 @@ select:hover {
     padding: 20px;
     border: 2px solid currentColor;
     margin: 25px 0;
+}
+
+/* Адаптивные стили */
+@media (max-width: 1200px) {
+    .admin-container {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-table {
+        font-size: 14px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 10px;
+    }
+
+    select {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-container {
+        padding: 15px;
+    }
+
+    .nav-button {
+        padding: 6px 15px;
+        font-size: 14px;
+    }
+
+    .admin-table {
+        font-size: 12px;
+    }
+
+    td:nth-child(7), 
+    th:nth-child(7) {
+        min-width: 150px;
+        max-width: 250px;
+    }
 }
