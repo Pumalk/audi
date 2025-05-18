@@ -236,6 +236,8 @@ main img {
     -webkit-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение для Safari */
     -moz-box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение для Firefox */
     box-shadow: 0px 0px 300px 1px rgba(255,0,0,1); /* Красное свечение */
+    max-width: 50%;
+    margin: auto;
 }
 
 /* Заголовки формы */
