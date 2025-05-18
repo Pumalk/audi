@@ -1,4 +1,4 @@
-/* admin.css */
+/* Основные стили */
 .admin-container {
     max-width: 85%;
     margin: 20px auto;
@@ -6,21 +6,34 @@
     background: rgba(0,0,0,0.85);
     border-radius: 12px;
     box-shadow: 0 0 45px rgba(255,0,0,0.3);
-    box-sizing: border-box; /* Учет отступов в ширине и высоте */
+    box-sizing: border-box;
 }
 
+.admin-section-title {
+    color: #2beccb;
+    border-bottom: 2px solid #be2828;
+    padding-bottom: 10px;
+    margin-top: 30px;
+}
+
+.admin-nav-buttons {
+    margin-bottom: 20px;
+}
+
+/* Кнопки */
 .nav-button,
 button {
     background: #2beccb;
     color: #000;
     padding: 8px 20px;
     border-radius: 4px;
-    text-decoration: none; /* Удаление подчеркивания */
-    margin-left: 10px; /* Отступ слева */
-    transition: background 0.3s ease; /* Плавный переход фона */
+    text-decoration: none;
+    margin-right: 10px;
+    transition: background 0.3s ease;
     cursor: pointer;
     border: 1px solid #444;
     font-weight: bold;
+    display: inline-block;
 }
 
 .nav-button:hover,
@@ -28,6 +41,16 @@ button:hover {
     background: #25c7a9;
 }
 
+.delete-button {
+    background: #be2828 !important;
+    color: white !important;
+}
+
+.delete-button:hover {
+    background: #9a1f1f !important;
+}
+
+/* Таблицы */
 .admin-table {
     width: 100%;
     border-collapse: collapse;
@@ -46,26 +69,25 @@ button:hover {
     text-align: center;
     font-weight: 600;
     letter-spacing: 0.5px;
-    overflow-wrap: break-word; /* Современный аналог word-wrap */
-    white-space: normal !important; /* Разрешить перенос строк */
+    overflow-wrap: break-word;
+    white-space: normal !important;
     border: 1px solid #444;
-    width: auto;
-    font-weight: bold;
-
 }
 
 .admin-table td {
     padding: 12px 15px;
     border-bottom: 1px solid #333;
-    vertical-align: top;
-    overflow-wrap: break-word; /* Современный аналог word-wrap */
-    white-space: normal !important; /* Разрешить перенос строк */
+    vertical-align: middle;
+    overflow-wrap: break-word;
+    white-space: normal !important;
+    text-align: center;
 }
 
-td:nth-child(7), 
-th:nth-child(7) { /* 7 - номер колонки с комментарием */
-    min-width: 250px; 
-    max-width: 400px;
+/* Формы */
+.status-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 select {
@@ -76,24 +98,125 @@ select {
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 100%;
 }
 
 select:hover {
     border-color: #2beccb;
 }
 
+/* Аватары */
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2beccb;
+}
+
+.no-avatar {
+    color: #888;
+    font-style: italic;
+}
+
+/* Переключатель админа */
+.admin-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.admin-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.admin-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.admin-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.admin-toggle input:checked + .admin-toggle-slider {
+    background-color: #2beccb;
+}
+
+.admin-toggle input:checked + .admin-toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.hidden-submit {
+    display: none;
+}
+
+/* Пагинация */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    gap: 5px;
+}
+
+.pagination a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #444;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.pagination a.active {
+    background-color: #2beccb;
+    color: black;
+    font-weight: bold;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #444;
+}
+
+/* Уведомления */
 .admin-notice {
     color: #2beccb;
     text-align: center;
     padding: 20px;
     border: 2px solid currentColor;
     margin: 25px 0;
+    border-radius: 8px;
 }
 
 /* Адаптивные стили */
 @media (max-width: 1200px) {
     .admin-container {
         max-width: 95%;
+    }
+    
+    .admin-table th:nth-child(6),
+    .admin-table td:nth-child(6),
+    .admin-table th:nth-child(7),
+    .admin-table td:nth-child(7) {
+        display: none;
     }
 }
 
@@ -106,10 +229,22 @@ select:hover {
     .admin-table td {
         padding: 10px;
     }
+    
+    .admin-table th:nth-child(5),
+    .admin-table td:nth-child(5),
+    .admin-table th:nth-child(9),
+    .admin-table td:nth-child(9) {
+        display: none;
+    }
 
     select {
         padding: 6px 10px;
         font-size: 14px;
+    }
+    
+    .user-avatar {
+        width: 40px;
+        height: 40px;
     }
 }
 
@@ -121,15 +256,27 @@ select:hover {
     .nav-button {
         padding: 6px 15px;
         font-size: 14px;
+        margin-bottom: 10px;
     }
 
     .admin-table {
         font-size: 12px;
     }
-
-    td:nth-child(7), 
-    th:nth-child(7) {
-        min-width: 150px;
-        max-width: 250px;
+    
+    .admin-table th:nth-child(4),
+    .admin-table td:nth-child(4),
+    .admin-table th:nth-child(8),
+    .admin-table td:nth-child(8) {
+        display: none;
+    }
+    
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .pagination a {
+        padding: 6px 12px;
+        font-size: 14px;
     }
 }
