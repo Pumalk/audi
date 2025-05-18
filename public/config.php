@@ -28,8 +28,12 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 // Настройки для загрузки файлов
-define('UPLOAD_DIR', 'account/uploads/avatars/'); // Директория для загрузки файлов
-@mkdir(UPLOAD_DIR, 0755, true); // Создание директории, если она не существует, с правами доступа 0755
+define('UPLOAD_DIR', __DIR__ . '/account/uploads/avatars/'); // Абсолютный путь
+
+if (!is_dir(UPLOAD_DIR) && !mkdir(UPLOAD_DIR, 0755, true)) {
+    die("Ошибка: не удалось создать директорию для аватаров.");
+}
+
 define('MAX_FILE_SIZE', 8 * 1024 * 1024); // Максимальный размер загружаемого файла (8MB)
 
 // Функция для конвертации размеров
