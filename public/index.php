@@ -94,6 +94,39 @@ exit();
         }
     }
 }
+
+// Данные об автомобилях
+$cars = [
+    // Легковые
+    'RS6 C8' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/rs 6/audi 1.jpg', 'link' => 'авто/легковые/rs 6/rs6.html'],
+    'e-tron GT' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/e-tron/1.webp', 'link' => 'авто/легковые/e-tron/e-tron.html'],
+    'A3 8Y' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/a3/1.jpg', 'link' => 'авто/легковые/a3/a3.html'],
+    'A6 allroad quattro C8' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/A6/1.jpg', 'link' => 'авто/легковые/A6/A6.html'],
+    
+    // Внедорожники
+    'Q3 F3' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q3/1.webp', 'link' => 'авто/внедорожники/q3/q3.html'],
+    'Q5 FY' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q5/1.webp', 'link' => 'авто/внедорожники/q5/q5.html'],
+    'Q7 4M' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q7/1.webp', 'link' => 'авто/внедорожники/q7/q7.html'],
+    'Q8 4M' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q8/1.webp', 'link' => 'авто/внедорожники/q8/q8.html'],
+    
+    // S-Class
+    'S3 8Y' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/S3/1.webp', 'link' => 'авто/S-класс/s3/s3.html'],
+    'S4 B9' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/s4/1.webp', 'link' => 'авто/S-класс/s4/s4.html'],
+    'S6 C8' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/s6/1.webp', 'link' => 'авто/S-класс/s6/s6.html'],
+    'S8 D5' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/s8/1.webp', 'link' => 'авто/S-класс/s8/s8.html']
+];
+
+// Обработка поискового запроса
+$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
+$filteredCars = [];
+
+if (!empty($searchQuery)) {
+    foreach ($cars as $name => $data) {
+        if (stripos($name, $searchQuery) !== false) {
+            $filteredCars[$name] = $data;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -138,16 +171,23 @@ exit();
 
 <!-- Шапка сайта -->
 <header>
-    <div class="header-center">
-        <div class="logo">
-            <img src="./media/медиа для страницы/лого.png" alt="Audi Logo">
-        </div>
-        <div class="order-button2">
-            <a href="#forma" class="order-button">Заказать автомобиль</a>
-        </div>
+    <div class="logo">
+        <img src="./media/медиа для страницы/лого.png" alt="Audi Logo">
     </div>
-    <!-- Кнопка авторизации -->
+    
     <a href="account/account.php" class="auth-button">Личный кабинет</a>
+    
+    <div class="order-button2">
+        <a href="#forma" class="order-button">Заказать автомобиль</a>
+    </div>
+    
+    <div class="search-form">
+        <form method="GET" action="">
+            <input type="text" name="search" placeholder="Поиск по названию..." 
+                value="<?= htmlspecialchars($searchQuery) ?>">
+            <button type="submit">Найти</button>
+        </form>
+    </div>
 </header>
 
 <!-- Навигация по категориям -->
@@ -172,73 +212,58 @@ exit();
 </div>
 
 <!-- Основной контент с категориями автомобилей -->
-<main class="car"> 
-    <!-- Легковые автомобили -->
-    <div class="kuzov" id="kuzov-l">Легковые</div>
-    <div class="site-link">
-        <img src="авто/легковые/rs 6/audi 1.jpg" alt="Audi RS6 C8">
-        <h2>RS6 C8</h2>
-        <a href="авто/легковые/rs 6/rs6.html">Описание</a>
-    </div>
-        <div class="site-link">
-            <img src="авто/легковые/e-tron/1.webp" alt="Audi e-tron GT">
-            <h2>e-tron GT</h2>
-            <a href="авто/легковые/e-tron/e-tron.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/легковые/a3/1.jpg" alt="Audi A3 8Y">
-            <h2>A3 8Y</h2>
-            <a href="авто/легковые/a3/a3.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/легковые/A6/1.jpg" alt="Audi A6 allroad quattro C8">
-            <h2>A6 allroad quattro C8</h2>
-            <a href="авто/легковые/A6/A6.html">Описание</a>
-        </div>
+<main class="car">
+    <?php if (!empty($searchQuery)): ?>
+        <div class="kuzov">Результаты поиска: "<?= htmlspecialchars($searchQuery) ?>"</div>
+        
+        <?php if (!empty($filteredCars)): ?>
+            <?php foreach ($filteredCars as $name => $data): ?>
+                <div class="site-link">
+                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
+                    <h2><?= htmlspecialchars($name) ?></h2>
+                    <a href="<?= $data['link'] ?>">Описание</a>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="no-results">
+                <p>По вашему запросу "<?= htmlspecialchars($searchQuery) ?>" не найдено автомобилей</p>
+            </div>
+        <?php endif; ?>
+    
+    <?php else: ?>
+        <div class="kuzov" id="kuzov-l">Легковые</div>
+        <?php foreach ($cars as $name => $data): ?>
+            <?php if ($data['category'] === 'kuzov-l'): ?>
+                <div class="site-link">
+                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
+                    <h2><?= htmlspecialchars($name) ?></h2>
+                    <a href="<?= $data['link'] ?>">Описание</a>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
         
         <div class="kuzov" id="kuzov-v">Внедорожники</div>
-        <div class="site-link">
-            <img src="авто/внедорожники/q3/1.webp" alt="Audi Q3 F3">
-            <h2>Q3 F3</h2>
-            <a href="авто/внедорожники/q3/q3.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/внедорожники/q5/1.webp" alt="Audi Q5 FY">
-            <h2>Q5 FY</h2>
-            <a href="авто/внедорожники/q5/q5.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/внедорожники/q7/1.webp" alt="Audi Q7 4M">
-            <h2>Q7 4M</h2>
-            <a href="авто/внедорожники/q7/q7.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/внедорожники/q8/1.webp" alt="Audi Q8 4M">
-            <h2>Q8 4M</h2>
-            <a href="авто/внедорожники/q8/q8.html">Описание</a>
-        </div>
+        <?php foreach ($cars as $name => $data): ?>
+            <?php if ($data['category'] === 'kuzov-v'): ?>
+                <div class="site-link">
+                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
+                    <h2><?= htmlspecialchars($name) ?></h2>
+                    <a href="<?= $data['link'] ?>">Описание</a>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
         
         <div class="kuzov" id="kuzov-s">S-Class</div>
-        <div class="site-link">
-            <img src="авто/S-класс/S3/1.webp" alt="Audi S3 8Y">
-            <h2>S3 8Y</h2>
-            <a href="авто/S-класс/s3/s3.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/S-класс/s4/1.webp" alt="Audi S4 B9">
-            <h2>S4 B9</h2>
-            <a href="авто/S-класс/s4/s4.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/S-класс/s6/1.webp" alt="Audi S6 C8">
-            <h2>S6 C8</h2>
-            <a href="авто/S-класс/s6/s6.html">Описание</a>
-        </div>
-        <div class="site-link">
-            <img src="авто/S-класс/s8/1.webp" alt="Audi S8 D5">
-            <h2>S8 D5</h2>
-            <a href="авто/S-класс/s8/s8.html">Описание</a>
-        </div>
+        <?php foreach ($cars as $name => $data): ?>
+            <?php if ($data['category'] === 'kuzov-s'): ?>
+                <div class="site-link">
+                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
+                    <h2><?= htmlspecialchars($name) ?></h2>
+                    <a href="<?= $data['link'] ?>">Описание</a>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </main>
 
 <!-- Форма заказа автомобиля -->

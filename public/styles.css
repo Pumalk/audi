@@ -74,18 +74,26 @@ body {
 
 /* Стили для шапки сайта */
 header {
-    display: flex; /* Гибкий контейнер */
-    justify-content: space-between; /* Распределение элементов */
-    align-items: flex-start; /* Выравнивание по началу */
-    padding: 15px 5%; /* Внутренние отступы */
-    background: #000; /* Черный фон */
-    position: relative; /* Относительное позиционирование */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    padding: 15px 5%;
+    background: #000;
+    position: relative;
     margin: 0;
+    align-items: center;
 }
 
 /* Логотип */
+.logo { 
+    grid-area: 1 / 2 / 2 / 3;
+    justify-self: center;
+}
+
 .logo img {
-    width: 10%; /* Ширина логотипа */
+    width: 30%; /* Ширина логотипа */
     display: block; /* Блочный элемент */
     margin: 0 auto; /* Центрирование */
 }
@@ -93,6 +101,8 @@ header {
 /* Дополнительный отступ для кнопки заказа */
 .order-button2 {
     margin-top: 15px;
+    grid-area: 2 / 2 / 3 / 3;
+    justify-self: center;
 }
 
 /* Стили для ссылок кнопок заказа */
@@ -102,16 +112,55 @@ header {
 }
 
 /* Кнопка авторизации */
-.auth-button {
-    position: absolute; /* Абсолютное позиционирование */
-    margin: 1.5%; /* Внешние отступы */
-    right: 2%; /* Отступ справа */
+.auth-button { 
+    grid-area: 1 / 3 / 2 / 4;
+    justify-self: end;
+    margin: 1.5%;
+    position: static;
+    transform: none;
     background: #444; /* Темно-серый фон */
     padding: 8px 20px; /* Внутренние отступы */
     border-radius: 5px; /* Скругленные углы */
-    white-space: nowrap; /* Запрет переноса текста */
     color: white; /* Белый текст */
     text-decoration: none; /* Убираем подчеркивание */
+    box-sizing: content-box;
+}
+
+
+/* Стили для формы поиска */
+.search-form {
+    grid-area: 2 / 3 / 3 / 4;
+    justify-self: end;
+    margin: 0;
+}
+
+.search-form input[type="text"] {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #444;
+    width: 50%;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.search-form button {
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Стили для сообщения об отсутствии результатов */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    font-size: 20px;
+    color: #888;
 }
 
 /* Центрирование блока навигации */
@@ -396,10 +445,15 @@ body, header, nav, .opisanie, .car, .forma, footer {
     .auth-button{
         font-size: small;
         box-sizing: content-box;
-        width: 10%;
+        min-width: 50%;
         overflow-wrap: break-word;
         padding: 1.5%;
     }
+
+    .search-form input{
+        max-width: 30%;
+    }
+
     .site-link{
         max-width: 100%;
     }
@@ -435,7 +489,7 @@ body, header, nav, .opisanie, .car, .forma, footer {
     .auth-button{
         font-size: small;
         box-sizing: content-box;
-        width: 15%;
+        min-width: 90%;
         overflow-wrap: break-word;
         padding: 2%;
     }
@@ -472,11 +526,12 @@ body, header, nav, .opisanie, .car, .forma, footer {
 }
 
 @media (max-width: 480px) {
-    h1 { font-size: 24px; }
-    h2 { font-size: 20px; }
+    body{
+        font-size: small;
+    }
+
     
     .auth-button{
-        font-size: small;
         box-sizing: content-box;
         width: 25%;
         overflow-wrap: break-word;
@@ -484,23 +539,11 @@ body, header, nav, .opisanie, .car, .forma, footer {
     }
 
     .opisanie {
-        font-size: 16px;
         margin: 10px;
         padding: 10px;
     }
 
-    .site-link h2 {
-        font-size: 24px;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 14px;
-    }
-
     #scrollToTop {
-        font-size: 24px;
         bottom: 15px;
         right: 3%;
     }
