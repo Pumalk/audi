@@ -16,21 +16,36 @@ if (empty($_SESSION['user'])) {
     exit();
 }
 
-// Проверка прав администратора
-$is_admin = !empty($_SESSION['user']['is_admin']);
-
 // Получаем данные пользователя из сессии
 $user = $_SESSION['user'];
 
 // Проверка структуры сессии
 if (!is_array($user) || empty($user['id'])) {
     session_destroy();
-    die("Ошибка сессии. <a href='../auth/login.php'>Войдите снова</a>");
+    header("Location: ../auth/login.php");
+    exit();
 }
+
+// Обновляем данные пользователя из базы данных
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->bind_param("i", $user['id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$_SESSION['user'] = $result->fetch_assoc();
+$user = $_SESSION['user'];
+
+// Проверка прав администратора
+$is_admin = !empty($_SESSION['user']['is_admin']) && $_SESSION['user']['is_admin'] == 1;
 
 // Получение истории заказов пользователя
 $orders = [];
-$stmt = $conn->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC");
+$stmt = $conn->prepare("
+    SELECT orders.*, cars.model_name 
+    FROM orders 
+    JOIN cars ON orders.car_id = cars.id 
+    WHERE orders.user_id = ? 
+    ORDER BY orders.order_date DESC
+");
 $stmt->bind_param("i", $user['id']);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -274,31 +289,31 @@ if (isset($_GET['logout'])) {
     </div>
     <!-- История заказов -->
     <div class="orders-history"> 
-            <h2>История заказов</h2>
-            <?php if (!empty($orders)): ?>
-                <table>
-                    <tr>
-                        <th>Модель</th>
-                        <th>Телефон</th>
-                        <th>Оплата</th>
-                        <th>Статус</th>
-                        <th>Дата заказа</th>
-                        <th>Комментарий</th>
-                    </tr>
-            <?php foreach ($orders as $order): ?>
-        <tr>
-            <td><?= htmlspecialchars($order['model']) ?></td>
-            <td><?= htmlspecialchars($order['phone']) ?></td>
-            <td><?= htmlspecialchars($order['payment_status']) ?></td>
-            <td><?= htmlspecialchars($order['order_status']) ?></td>
-            <td><?= date('d.m.Y H:i', strtotime($order['order_date'])) ?></td>
-            <td><?= nl2br(htmlspecialchars($order['message'])) ?></td>
-        </tr>
-    <?php endforeach; ?>
-</table>
-            <?php else: ?>
-                <p>У вас пока нет заказов.</p>
-            <?php endif; ?>
-        </div>
+        <h2>История заказов</h2>
+        <?php if (!empty($orders)): ?>
+            <table>
+                <tr>
+                    <th>Модель</th>
+                    <th>Телефон</th>
+                    <th>Оплата</th>
+                    <th>Статус</th>
+                    <th>Дата заказа</th>
+                    <th>Комментарий</th>
+                </tr>
+                <?php foreach ($orders as $order): ?>
+                <tr>
+                    <td><?= htmlspecialchars($order['model_name']) ?></td>
+                    <td><?= htmlspecialchars($order['phone']) ?></td>
+                    <td><?= htmlspecialchars($order['payment_status']) ?></td>
+                    <td><?= htmlspecialchars($order['order_status']) ?></td>
+                    <td><?= date('d.m.Y H:i', strtotime($order['order_date'])) ?></td>
+                    <td><?= nl2br(htmlspecialchars($order['message'] ?? '')) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php else: ?>
+            <p>У вас пока нет заказов.</p>
+        <?php endif; ?>
+    </div>
 </body>
 </html>

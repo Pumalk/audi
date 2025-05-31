@@ -49,6 +49,27 @@ if (!isset($_SESSION['user'])) {
 $user = $_SESSION['user'];
 $errors = []; // Массив для хранения ошибок
 
+// Загрузка данных об автомобилях
+$cars = [];
+$cars_result = $conn->query("SELECT * FROM cars");
+if (!$cars_result) {
+    $errors[] = "Ошибка при загрузке списка автомобилей: " . $conn->error;
+    error_log("Ошибка SQL при загрузке автомобилей: " . $conn->error);
+} else {
+    while ($row = $cars_result->fetch_assoc()) {
+        $cars[$row['id']] = [
+            'model_name' => $row['model_name'],
+            'category' => $row['category'],
+            'img' => $row['main_image_path'],
+            'link' => $row['detail_page_path']
+        ];
+    }
+    if (empty($cars)) {
+        $errors[] = "Список автомобилей пуст. Проверьте базу данных.";
+        error_log("Таблица cars пуста или не содержит данных.");
+    }
+}
+
 // Обработка формы заказа
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // Проверка CSRF-токена
@@ -67,8 +88,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     }
 
     // Проверка выбора автомобиля
-    if (empty($car_id) || !isset($cars[$car_id])) {
-        $errors['car_id'] = "Выберите модель автомобиля";
+    if (empty($car_id)) {
+        $errors['car_id'] = "Выберите модель автомобиля (поле не заполнено)";
+    } elseif (!array_key_exists($car_id, $cars)) {
+        $errors['car_id'] = "Выбранная модель автомобиля недоступна (ID: " . htmlspecialchars($car_id) . ")";
+        error_log("Недопустимый car_id: " . $car_id . ", доступные ID: " . implode(", ", array_keys($cars)));
+    }
+
+    // Отладочная информация
+    if (!empty($errors)) {
+        error_log("Ошибки при обработке формы: " . print_r($errors, true));
+        error_log("POST данные: " . print_r($_POST, true));
+        error_log("Доступные автомобили: " . print_r($cars, true));
     }
 
     // Если ошибок нет, сохраняем данные в базу данных
@@ -91,24 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             exit();
         } catch (Exception $e) {
             $errors[] = "Ошибка при выполнении запроса: " . $e->getMessage();
+            error_log("Ошибка SQL при сохранении заказа: " . $e->getMessage());
         }
     }
-}
-
-// Данные об автомобилях
-$cars_result = $conn->query("SELECT * FROM cars");
-if (!$cars_result) {
-    die("Ошибка при выполнении запроса: " . $conn->error);
-}
-
-$cars = [];
-while ($row = $cars_result->fetch_assoc()) {
-    $cars[$row['id']] = [
-        'model_name' => $row['model_name'],
-        'category' => $row['category'],
-        'img' => $row['main_image_path'],
-        'link' => $row['detail_page_path']
-    ];
 }
 
 // Обработка поискового запроса
@@ -196,14 +212,14 @@ if (!empty($searchQuery)) {
         </ul>
     </div>
 </nav>
-    <div class="opisanie">Добро пожаловать в мир совершенства! 
-    Здесь, среди элегантных линий и безупречного дизайна, рождаются автомобили, которые воплощают мечты о свободе и комфорте.
-    Audi – это не просто машина, это произведение искусства, созданное для тех, кто ценит качество, инновации и уникальный стиль.
-        Каждая модель Audi – это сочетание передовых технологий и традиций немецкого качества.
-        Инженеры компании неустанно работают над тем, чтобы каждый автомобиль стал идеальным продолжением вашего характера.
-        Мощный двигатель, интеллектуальные системы безопасности, комфортная подвеска – всё это создано для того, чтобы вы наслаждались каждым километром пути.
-        Audi – это выбор тех, кто стремится к лучшему. 
-        Присоединяйтесь к миру престижа и эксклюзивности, выберите свой идеальный Audi сегодня!
+<div class="opisanie">Добро пожаловать в мир совершенства! 
+Здесь, среди элегантных линий и безупречного дизайна, рождаются автомобили, которые воплощают мечты о свободе и комфорте.
+Audi – это не просто машина, это произведение искусства, созданное для тех, кто ценит качество, инновации и уникальный стиль.
+    Каждая модель Audi – это сочетание передовых технологий и традиций немецкого качества.
+    Инженеры компании неустанно работают над тем, чтобы каждый автомобиль стал идеальным продолжением вашего характера.
+    Мощный двигатель, интеллектуальные системы безопасности, комфортная подвеска – всё это создано для того, чтобы вы наслаждались каждым километром пути.
+    Audi – это выбор тех, кто стремится к лучшему. 
+    Присоединяйтесь к миру престижа и эксклюзивности, выберите свой идеальный Audi сегодня!
 </div>
 
 <!-- Основной контент с категориями автомобилей -->
@@ -263,6 +279,9 @@ if (!empty($searchQuery)) {
 <!-- Форма заказа автомобиля -->
 <section class="forma" id="forma">
     <h2>Заказать автомобиль</h2>
+    <?php if (empty($cars)): ?>
+        <div class="error">Ошибка: список автомобилей недоступен. Обратитесь к администратору.</div>
+    <?php else: ?>
     <form method="POST">
         <!-- CSRF-токен -->
         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
@@ -271,7 +290,7 @@ if (!empty($searchQuery)) {
         <label for="phone">Телефон:</label>
         <input type="tel" id="phone" name="phone" 
             value="<?= isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : '' ?>" 
-            required>
+            required pattern="\+7[0-9]{10}">
         <?php if (!empty($errors['phone'])): ?>
             <div class="error"><?= $errors['phone'] ?></div>
         <?php endif; ?>
@@ -296,7 +315,7 @@ if (!empty($searchQuery)) {
         <button type="submit" name="submit">Отправить заказ</button>
 
         <!-- Вывод ошибок -->
-        <?php if (!empty($errors)): ?>
+        <?php if (!empty($errors) && !isset($errors['phone']) && !isset($errors['car_id'])): ?>
             <div class="error-message">
                 <?php foreach($errors as $error): ?>
                     <p><?= $error ?></p>
@@ -304,6 +323,7 @@ if (!empty($searchQuery)) {
             </div>
         <?php endif; ?>
     </form>
+    <?php endif; ?>
 </section>
 
 <!-- Подвал сайта -->
@@ -314,5 +334,4 @@ if (!empty($searchQuery)) {
     <p>© 2024-2025 Audi</p>
 </footer>
 </body>
-<!--https://github.com/Pumalk -->
 </html>

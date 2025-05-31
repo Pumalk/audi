@@ -39,15 +39,15 @@ $total_user_pages = ceil($total_users / $users_per_page);
 // Получение заказов для текущей страницы
 $stmt = $conn->prepare("
     SELECT orders.*, 
+        cars.model_name,
         users.first_name, 
         users.last_name, 
         users.email, 
         users.birth_date,
-        users.username,
-        users.avatar_path,
-        users.created_at as user_created
+        users.username
     FROM orders 
     JOIN users ON orders.user_id = users.id
+    JOIN cars ON orders.car_id = cars.id
     ORDER BY orders.order_date DESC
     LIMIT ? OFFSET ?
 ");
@@ -142,61 +142,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         
         <?php if(empty($orders)): ?>
-            <div class="admin-notice">Нет активных заказов</div>
-        <?php else: ?>
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Email</th>
-                        <th>Дата рождения</th>
-                        <th>Телефон</th>
-                        <th>Модель</th>
-                        <th>Комментарий</th>
-                        <th>Дата заказа</th>
-                        <th>Оплата</th>
-                        <th>Статус</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($orders as $order): ?>
-                    <tr>
-                        <td><?= $order['id'] ?></td>
-                        <td><?= htmlspecialchars($order['first_name']) ?></td>
-                        <td><?= htmlspecialchars($order['last_name']) ?></td>
-                        <td><?= htmlspecialchars($order['email']) ?></td>
-                        <td><?= htmlspecialchars($order['birth_date']) ?></td>
-                        <td><?= htmlspecialchars($order['phone']) ?></td>
-                        <td><?= htmlspecialchars($order['model']) ?></td>
-                        <td><?= nl2br(htmlspecialchars($order['message'] ?? '')) ?></td>
-                        <td><?= date('d.m.Y H:i', strtotime($order['order_date'])) ?></td>
-                        <td>
-                            <form class="status-form" method="POST">
-                                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                                <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
-                                <select name="payment_status">
-                                    <option value="не оплачен" <?= $order['payment_status'] === 'не оплачен' ? 'selected' : '' ?>>не оплачен</option>
-                                    <option value="оплачен" <?= $order['payment_status'] === 'оплачен' ? 'selected' : '' ?>>оплачен</option>
-                                </select>
-                        </td>
-                        <td>
-                                <select name="order_status">
-                                    <option value="оформляется" <?= $order['order_status'] === 'оформляется' ? 'selected' : '' ?>>оформляется</option>
-                                    <option value="отправлен" <?= $order['order_status'] === 'отправлен' ? 'selected' : '' ?>>отправлен</option>
-                                    <option value="доставлен" <?= $order['order_status'] === 'доставлен' ? 'selected' : '' ?>>доставлен</option>
-                                </select>
-                        </td>
-                        <td>
-                            <button type="submit" name="update_order">Обновить</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+    <div class="admin-notice">Нет активных заказов</div>
+<?php else: ?>
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID заказа</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Email</th>
+                <th>Дата рождения</th>
+                <th>Телефон</th>
+                <th>Модель</th>
+                <th>Комментарий</th>
+                <th>Дата заказа</th>
+                <th>Оплата</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($orders as $order): ?>
+            <tr>
+                <td><?= $order['id'] ?></td>
+                <td><?= htmlspecialchars($order['first_name']) ?></td>
+                <td><?= htmlspecialchars($order['last_name']) ?></td>
+                <td><?= htmlspecialchars($order['email']) ?></td>
+                <td><?= htmlspecialchars($order['birth_date']) ?></td>
+                <td><?= htmlspecialchars($order['phone']) ?></td>
+                <td><?= htmlspecialchars($order['model_name']) ?></td>
+                <td><?= nl2br(htmlspecialchars($order['message'] ?? '')) ?></td>
+                <td><?= date('d.m.Y H:i', strtotime($order['order_date'])) ?></td>
+                <td>
+                    <form class="status-form" method="POST">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                        <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
+                        <select name="payment_status">
+                            <option value="не оплачен" <?= $order['payment_status'] === 'не оплачен' ? 'selected' : '' ?>>не оплачен</option>
+                            <option value="оплачен" <?= $order['payment_status'] === 'оплачен' ? 'selected' : '' ?>>оплачен</option>
+                        </select>
+                </td>
+                <td>
+                        <select name="order_status">
+                            <option value="оформляется" <?= $order['order_status'] === 'оформляется' ? 'selected' : '' ?>>оформляется</option>
+                            <option value="отправлен" <?= $order['order_status'] === 'отправлен' ? 'selected' : '' ?>>отправлен</option>
+                            <option value="доставлен" <?= $order['order_status'] === 'доставлен' ? 'selected' : '' ?>>доставлен</option>
+                        </select>
+                </td>
+                <td>
+                    <button type="submit" name="update_order">Обновить</button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
             
             <div class="pagination">
                 <?php for ($i = 1; $i <= $total_order_pages; $i++): ?>
