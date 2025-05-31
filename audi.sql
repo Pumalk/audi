@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.127.126.26:3306
--- Время создания: Май 13 2025 г., 02:31
+-- Время создания: Май 31 2025 г., 19:31
 -- Версия сервера: 8.0.35
 -- Версия PHP: 8.2.18
 
@@ -24,19 +24,51 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `cars`
+--
+
+CREATE TABLE `cars` (
+  `id` int NOT NULL,
+  `model_name` varchar(100) NOT NULL,
+  `category` enum('kuzov-l','kuzov-v','kuzov-s') NOT NULL,
+  `main_image_path` varchar(255) NOT NULL,
+  `detail_page_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Дамп данных таблицы `cars`
+--
+
+INSERT INTO `cars` (`id`, `model_name`, `category`, `main_image_path`, `detail_page_path`) VALUES
+(6, 'RS6 C8', 'kuzov-l', 'авто/легковые/rs 6/audi 1.jpg', 'авто/легковые/rs 6/rs6.html'),
+(7, 'e-tron GT', 'kuzov-l', 'авто/легковые/e-tron/1.webp', 'авто/легковые/e-tron/e-tron.html'),
+(8, 'A3 8Y', 'kuzov-l', 'авто/легковые/a3/1.jpg', 'авто/легковые/a3/a3.html'),
+(9, 'A6 allroad quattro C8', 'kuzov-l', 'авто/легковые/A6/1.jpg', 'авто/легковые/A6/A6.html'),
+(10, 'Q3 F3', 'kuzov-v', 'авто/внедорожники/q3/1.webp', 'авто/внедорожники/q3/q3.html'),
+(11, 'Q5 FY', 'kuzov-v', 'авто/внедорожники/q5/1.webp', 'авто/внедорожники/q5/q5.html'),
+(12, 'Q7 4M', 'kuzov-v', 'авто/внедорожники/q7/1.webp', 'авто/внедорожники/q7/q7.html'),
+(13, 'Q8 4M', 'kuzov-v', 'авто/внедорожники/q8/1.webp', 'авто/внедорожники/q8/q8.html'),
+(14, 'S3 8Y', 'kuzov-s', 'авто/S-класс/S3/1.webp', 'авто/S-класс/s3/s3.html'),
+(15, 'S4 B9', 'kuzov-s', 'авто/S-класс/s4/1.webp', 'авто/S-класс/s4/s4.html'),
+(16, 'S6 C8', 'kuzov-s', 'авто/S-класс/s6/1.webp', 'авто/S-класс/s6/s6.html'),
+(17, 'S8 D5', 'kuzov-s', 'авто/S-класс/s8/1.webp', 'авто/S-класс/s8/s8.html');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `orders`
 --
 
 CREATE TABLE `orders` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
-  `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` mediumtext COLLATE utf8mb4_unicode_ci,
-  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `payment_status` enum('оплачен','не оплачен') COLLATE utf8mb4_unicode_ci DEFAULT 'не оплачен',
-  `order_status` enum('оформляется','отправлен','доставлен') COLLATE utf8mb4_unicode_ci DEFAULT 'оформляется'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `phone` varchar(20) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  `message` text,
+  `payment_status` enum('не оплачен','оплачен') DEFAULT 'не оплачен',
+  `order_status` enum('оформляется','отправлен','доставлен') DEFAULT 'оформляется',
+  `order_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -46,46 +78,59 @@ CREATE TABLE `orders` (
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `birth_date` date DEFAULT NULL,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatar_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_admin` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `birth_date` date NOT NULL,
+  `avatar_path` varchar(255) DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `birth_date`, `username`, `avatar_path`, `created_at`, `is_admin`) VALUES
-(1, 'Иван', 'Иванов', 'example@local.ru', '$2y$10$NUt1xWprdttaPwrYDFrFU.64q89pO9lu9Xy3eiNZ/vE9Xl0QTGEb2', '2025-05-01', 'Pumalk', 'uploads/avatars/avatar.jpg', '2025-05-05 11:30:49', 1);
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `birth_date`, `avatar_path`, `is_admin`, `created_at`) VALUES
+(1, 'Pumalk', '$2y$10$BQ02TCEHMNx5HusDUX6cFe3S2tbbWSLwPASR1Tmi6rv6QHSL0HTPu', 'example@local.ru', 'Иван', 'Иванов', '2025-05-01', 'uploads/avatars/кот.jpg', 1, '2025-05-31 10:32:23');
 
 --
 -- Индексы сохранённых таблиц
 --
 
 --
+-- Индексы таблицы `cars`
+--
+ALTER TABLE `cars`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `model_name` (`model_name`);
+
+--
 -- Индексы таблицы `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_orders_users` (`user_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `cars`
+--
+ALTER TABLE `cars`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -97,7 +142,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -107,7 +152,7 @@ ALTER TABLE `users`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_orders_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

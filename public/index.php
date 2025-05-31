@@ -53,22 +53,22 @@ $errors = []; // Массив для хранения ошибок
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // Проверка CSRF-токена
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        die('Ошибка CSRF'); // Завершаем выполнение при ошибке токена
+        die('Ошибка CSRF');
     }
 
     // Валидация и санитизация данных из формы
-    $phone = trim($_POST['phone'] ?? ''); // Телефон
-    $model = trim($_POST['model'] ?? ''); // Модель автомобиля
-    $message = trim($_POST['message'] ?? ''); // Дополнительное сообщение
+    $phone = trim($_POST['phone'] ?? '');
+    $car_id = trim($_POST['car_id'] ?? '');
+    $message = trim($_POST['message'] ?? '');
 
     // Проверка формата телефона
     if (!preg_match('/^\+7\d{10}$/', $phone)) {
         $errors['phone'] = "Телефон должен быть в формате +79161234567";
     }
 
-    // Проверка выбора модели автомобиля
-    if (empty($model) || $model === 'Выберите...') {
-        $errors['model'] = "Выберите модель автомобиля";
+    // Проверка выбора автомобиля
+    if (empty($car_id) || !isset($cars[$car_id])) {
+        $errors['car_id'] = "Выберите модель автомобиля";
     }
 
     // Если ошибок нет, сохраняем данные в базу данных
@@ -76,54 +76,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         try {
             // Подготовка SQL-запроса для вставки данных
             $stmt = $conn->prepare("
-                INSERT INTO orders (user_id, phone, model, message, order_date) 
+                INSERT INTO orders (user_id, car_id, phone, message, order_date) 
                 VALUES (?, ?, ?, ?, NOW())
             ");
-            $stmt->bind_param("isss", $user['id'], $phone, $model, $message);
+            $stmt->bind_param("iiss", $user['id'], $car_id, $phone, $message);
         
             $stmt->execute();
 
-// Устанавливаем флаг для показа попапа
-$_SESSION['show_popup'] = true;
+            // Устанавливаем флаг для показа попапа
+            $_SESSION['show_popup'] = true;
 
-  // Редирект для предотвращения повторной отправки формы
-header("Location: " . $_SERVER['PHP_SELF']);
-exit();
-} catch (Exception $e) {
+            // Редирект для предотвращения повторной отправки формы
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } catch (Exception $e) {
             $errors[] = "Ошибка при выполнении запроса: " . $e->getMessage();
         }
     }
 }
 
 // Данные об автомобилях
-$cars = [
-    // Легковые
-    'RS6 C8' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/rs 6/audi 1.jpg', 'link' => 'авто/легковые/rs 6/rs6.html'],
-    'e-tron GT' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/e-tron/1.webp', 'link' => 'авто/легковые/e-tron/e-tron.html'],
-    'A3 8Y' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/a3/1.jpg', 'link' => 'авто/легковые/a3/a3.html'],
-    'A6 allroad quattro C8' => ['category' => 'kuzov-l', 'img' => 'авто/легковые/A6/1.jpg', 'link' => 'авто/легковые/A6/A6.html'],
-    
-    // Внедорожники
-    'Q3 F3' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q3/1.webp', 'link' => 'авто/внедорожники/q3/q3.html'],
-    'Q5 FY' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q5/1.webp', 'link' => 'авто/внедорожники/q5/q5.html'],
-    'Q7 4M' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q7/1.webp', 'link' => 'авто/внедорожники/q7/q7.html'],
-    'Q8 4M' => ['category' => 'kuzov-v', 'img' => 'авто/внедорожники/q8/1.webp', 'link' => 'авто/внедорожники/q8/q8.html'],
-    
-    // S-Class
-    'S3 8Y' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/S3/1.webp', 'link' => 'авто/S-класс/s3/s3.html'],
-    'S4 B9' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/s4/1.webp', 'link' => 'авто/S-класс/s4/s4.html'],
-    'S6 C8' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/s6/1.webp', 'link' => 'авто/S-класс/s6/s6.html'],
-    'S8 D5' => ['category' => 'kuzov-s', 'img' => 'авто/S-класс/s8/1.webp', 'link' => 'авто/S-класс/s8/s8.html']
-];
+$cars_result = $conn->query("SELECT * FROM cars");
+if (!$cars_result) {
+    die("Ошибка при выполнении запроса: " . $conn->error);
+}
+
+$cars = [];
+while ($row = $cars_result->fetch_assoc()) {
+    $cars[$row['id']] = [
+        'model_name' => $row['model_name'],
+        'category' => $row['category'],
+        'img' => $row['main_image_path'],
+        'link' => $row['detail_page_path']
+    ];
+}
 
 // Обработка поискового запроса
 $searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
 $filteredCars = [];
 
 if (!empty($searchQuery)) {
-    foreach ($cars as $name => $data) {
-        if (stripos($name, $searchQuery) !== false) {
-            $filteredCars[$name] = $data;
+    foreach ($cars as $id => $data) {
+        if (stripos($data['model_name'], $searchQuery) !== false) {
+            $filteredCars[$id] = $data;
         }
     }
 }
@@ -214,56 +209,55 @@ if (!empty($searchQuery)) {
 <!-- Основной контент с категориями автомобилей -->
 <main class="car">
     <?php if (!empty($searchQuery)): ?>
-        <div class="kuzov">Результаты поиска: "<?= htmlspecialchars($searchQuery) ?>"</div>
-        
-        <?php if (!empty($filteredCars)): ?>
-            <?php foreach ($filteredCars as $name => $data): ?>
-                <div class="site-link">
-                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
-                    <h2><?= htmlspecialchars($name) ?></h2>
-                    <a href="<?= $data['link'] ?>">Описание</a>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <div class="no-results">
-                <p>По вашему запросу "<?= htmlspecialchars($searchQuery) ?>" не найдено автомобилей</p>
+    <div class="kuzov">Результаты поиска: "<?= htmlspecialchars($searchQuery) ?>"</div>
+    
+    <?php if (!empty($filteredCars)): ?>
+        <?php foreach ($filteredCars as $id => $data): ?>
+            <div class="site-link">
+                <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($data['model_name']) ?>">
+                <h2><?= htmlspecialchars($data['model_name']) ?></h2>
+                <a href="<?= $data['link'] ?>">Описание</a>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="no-results">
+            <p>По вашему запросу "<?= htmlspecialchars($searchQuery) ?>" не найдено автомобилей</p>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="kuzov" id="kuzov-l">Легковые</div>
+    <?php foreach ($cars as $id => $data): ?>
+        <?php if ($data['category'] === 'kuzov-l'): ?>
+            <div class="site-link">
+                <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($data['model_name']) ?>">
+                <h2><?= htmlspecialchars($data['model_name']) ?></h2>
+                <a href="<?= $data['link'] ?>">Описание</a>
             </div>
         <?php endif; ?>
+    <?php endforeach; ?>
     
-    <?php else: ?>
-        <div class="kuzov" id="kuzov-l">Легковые</div>
-        <?php foreach ($cars as $name => $data): ?>
-            <?php if ($data['category'] === 'kuzov-l'): ?>
-                <div class="site-link">
-                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
-                    <h2><?= htmlspecialchars($name) ?></h2>
-                    <a href="<?= $data['link'] ?>">Описание</a>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        
-        <div class="kuzov" id="kuzov-v">Внедорожники</div>
-        <?php foreach ($cars as $name => $data): ?>
-            <?php if ($data['category'] === 'kuzov-v'): ?>
-                <div class="site-link">
-                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
-                    <h2><?= htmlspecialchars($name) ?></h2>
-                    <a href="<?= $data['link'] ?>">Описание</a>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        
-        <div class="kuzov" id="kuzov-s">S-Class</div>
-        <?php foreach ($cars as $name => $data): ?>
-            <?php if ($data['category'] === 'kuzov-s'): ?>
-                <div class="site-link">
-                    <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($name) ?>">
-                    <h2><?= htmlspecialchars($name) ?></h2>
-                    <a href="<?= $data['link'] ?>">Описание</a>
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    <?php endif; ?>
+    <div class="kuzov" id="kuzov-v">Внедорожники</div>
+    <?php foreach ($cars as $id => $data): ?>
+        <?php if ($data['category'] === 'kuzov-v'): ?>
+            <div class="site-link">
+                <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($data['model_name']) ?>">
+                <h2><?= htmlspecialchars($data['model_name']) ?></h2>
+                <a href="<?= $data['link'] ?>">Описание</a>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    
+    <div class="kuzov" id="kuzov-s">S-Class</div>
+    <?php foreach ($cars as $id => $data): ?>
+        <?php if ($data['category'] === 'kuzov-s'): ?>
+            <div class="site-link">
+                <img src="<?= $data['img'] ?>" alt="<?= htmlspecialchars($data['model_name']) ?>">
+                <h2><?= htmlspecialchars($data['model_name']) ?></h2>
+                <a href="<?= $data['link'] ?>">Описание</a>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
 </main>
 
 <!-- Форма заказа автомобиля -->
@@ -283,22 +277,16 @@ if (!empty($searchQuery)) {
         <?php endif; ?>
 
         <!-- Выбор модели автомобиля -->
-        <label for="model">Выберите модель:</label>
-        <select id="model" name="model" required>
+        <label for="car_id">Выберите модель:</label>
+        <select id="car_id" name="car_id" required>
             <option value="" disabled selected>Выберите...</option>
-            <option value="RS6 C8">Audi RS6 C8</option>
-                <option value="e-tron GT">Audi e-tron GT</option>
-                <option value="A3 8Y">Audi A3 8Y</option>
-                <option value="Audi A6 allroad quattro C8">Audi A6 allroad quattro C8</option>
-                <option value="Q7 4M">Audi Q7 4M</option>
-                <option value="Q8 4M">Audi Q8 4M</option>
-                <option value="Q5 FY">Audi Q5 FY</option>
-                <option value="Q3 F3">Audi Q3 F3</option>
-                <option value="S3 8Y">Audi S3 8Y</option>
-                <option value="S4 B9">Audi S4 B9</option>
-                <option value="S6 C8">Audi S6 C8</option>
-                <option value="S8 D5">Audi S8 D5</option>
+            <?php foreach ($cars as $car_id => $data): ?>
+                <option value="<?= $car_id ?>"><?= htmlspecialchars($data['model_name']) ?></option>
+            <?php endforeach; ?>
         </select>
+        <?php if (!empty($errors['car_id'])): ?>
+            <div class="error"><?= $errors['car_id'] ?></div>
+        <?php endif; ?>
 
         <!-- Поле для дополнительных пожеланий -->
         <label for="message">Дополнительные пожелания:</label>
