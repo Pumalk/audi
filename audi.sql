@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.127.126.26:3306
--- Время создания: Май 31 2025 г., 19:31
+-- Время создания: Июн 02 2025 г., 14:09
 -- Версия сервера: 8.0.35
 -- Версия PHP: 8.2.18
 
@@ -62,13 +62,20 @@ INSERT INTO `cars` (`id`, `model_name`, `category`, `main_image_path`, `detail_p
 CREATE TABLE `orders` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
+  `car_id` int NOT NULL,
   `phone` varchar(20) NOT NULL,
-  `model` varchar(100) NOT NULL,
   `message` text,
   `payment_status` enum('не оплачен','оплачен') DEFAULT 'не оплачен',
   `order_status` enum('оформляется','отправлен','доставлен') DEFAULT 'оформляется',
   `order_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `car_id`, `phone`, `message`, `payment_status`, `order_status`, `order_date`) VALUES
+(1, 1, 7, '+79244573868', '123', 'оплачен', 'отправлен', '2025-05-31 14:03:34');
 
 -- --------------------------------------------------------
 
@@ -112,7 +119,8 @@ ALTER TABLE `cars`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `orders_ibfk_2` (`car_id`);
 
 --
 -- Индексы таблицы `users`
@@ -136,7 +144,7 @@ ALTER TABLE `cars`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -152,7 +160,8 @@ ALTER TABLE `users`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON DELETE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
